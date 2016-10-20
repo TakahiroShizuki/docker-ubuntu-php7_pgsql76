@@ -1,0 +1,9 @@
+- name: caston src.
+  shell: >
+    mkdir -p /opt/src/caston;
+    chown -R www-data:www-data /opt/src/caston;
+    chmod - g+s /opt/src/caston;
+    cd /opt/src/caston;
+    git clone git@bauport_bitbucket:bauport-takahio_shizuki/caston.git;
+    git clone git@bauport_bitbucket:bauport-takahio_shizuki/caston_office.git;
+    git clone git@bauport_bitbucket:bauport-takahio_shizuki/caston_staff.git;

@@ -1,0 +1,25 @@
+- name: setup dir.
+  shell: >
+    mkdir -p /opt/caston;
+    mkdir -p /opt/caston/logs;
+    mkdir -p /opt/caston/tmp;
+    mkdir -p /opt/caston/tmp2;
+- name: setup sources.
+  shell: >
+    pwd;
+    cp -p caston.tar.bz2 /opt/caston/;
+    cp -p _caston.dmp.gz /opt/caston/;
+    cd /opt/caston;
+    bunzip2 caston.tar.bz2;
+    tar xvfp caston.tar 1>/dev/null 2>/dev/null;
+    chown -R www-data:www-data /opt/caston
+- name: start postgres.
+  shell: >
+    sudo -i -u postgres pg_ctl restart;
+- name: createdb caston.
+  shell: >
+    sudo -i -u postgres createuser caston -s;
+    sudo -i -u postgres createdb caston -E UTF-8;
+- name: createdb caston.
+  shell: >
+    /etc/init.d/apache2 start;

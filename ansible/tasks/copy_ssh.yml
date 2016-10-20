@@ -1,0 +1,9 @@
+- name: copy .ssh
+  shell: >
+    mkdir ~/.ssh
+    chmod 700 ~/.ssh;
+    dropbox_uploader.sh download dotfiles/ssh/config ~/.ssh/config.txt;
+    mv ~/.ssh/config.txt ~/.ssh/config;
+    dropbox_uploader.sh download dotfiles/ssh/id_rsa ~/.ssh/id_rsa;
+    dropbox_uploader.sh download dotfiles/ssh/bauport-id_rsa ~/.ssh/bauport-id_rsa;
+    chown -R root:root ~/.ssh;

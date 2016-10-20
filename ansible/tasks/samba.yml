@@ -1,0 +1,6 @@
+- name: samba.
+  shell: >
+    apt-get -y install samba;
+    chown www-data:www-data /opt/;
+    chmod -R g+s /opt/;
+    service samba restart;

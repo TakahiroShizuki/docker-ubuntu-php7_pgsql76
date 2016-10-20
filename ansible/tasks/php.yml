@@ -1,0 +1,21 @@
+- name: install dep libs.
+  shell: >
+    apt-get -y install libpng12-dev libjpeg-dev libxml2-dev libmcrypt-dev libmhash-dev;
+- name: build.
+  shell: >
+    cd /opt/src/;
+    tar xjf php-5.2.17.tar.bz2;
+    cd /opt/src/php-5.2.17/sapi/apache2handler;
+    patch -p0 < ../../../php52_apache24.patch;
+    cd /opt/src/php-5.2.17;
+    EXTRA_LIBS=-lresolv ./configure --disable-simplexml --disable-dom --with-png-dir=/usr/bin/libpng-config --with-jpeg-dir=/usr/bin/libjpeg-config--with-libdir=lib --enable-mbstring --with-mhash --with-zlib --with-gettext --with-mcrypt --with-pdo-pgsql=/usr/local/pgsql/include --with-pgsql=/usr/local/pgsql/include--with-pear --with-apxs2=/usr/bin/apxs2;
+    make;
+    make install;
+- name: setup php.
+  shell: >
+    sed -i.bak -e "s%;date.timezone =%date.timezone = Tokyo/Asia%g" /etc/php5/apache2/php.ini;
+    usermod -u 1000 www-data;
+    cd /usr/local/lib;
+    rm -rf /usr/local/lib/php;
+    tar xjvf caston-pear_packages.tar.bz2;
+    mv /usr/local/lib/pear /usr/local/lib/php;

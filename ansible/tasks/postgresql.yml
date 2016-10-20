@@ -1,0 +1,36 @@
+- name: install dep libs.
+  shell: >
+    apt-get -y install libreadline-dev zlib1g-dev;
+- name: add group
+  group: name=postgres state=present
+- name: user add
+  user: name=postgres group=postgres shell=/bin/bash home=/home/postgres state=present
+- name: build.
+  shell: >
+    mkdir -p /opt/src;
+    cd /opt/src;
+    tar xjf postgresql-8.1.23.tar.bz2;
+    cd /opt/src/postgresql-8.1.23;
+    export PREFIX=/home/postgres;
+    ./configure --bindir=$PREFIX/bin --datadir=$PREFIX/share --libdir=$PREFIX/lib --sysconfdir=$PREFIX/etc;
+    make;
+    make install;
+- name: add env.
+  shell: >
+    export PREFIX=/home/postgres;
+    echo export PATH=$PATH:$PREFIX/bin >> $PREFIX/.profile;
+    echo export POSTGRES_HOME=$PREFIX >> $PREFIX/.profile;
+    echo export PGLIB=$PREFIX/lib >> $PREFIX/.profile;
+    echo export PGDATA=$PREFIX/data >> $PREFIX/.profile;
+- name: init db.
+  shell: >
+    mkdir $PREFIX/data;
+    chmod 700 $PREFIX/data;
+    chown -R postgres:postgres $PREFIX;
+    sudo -i -u postgres initdb -D /home/postgres/data;
+- name: config.
+  shell: >
+    export PREFIX=/home/postgres;
+    sed -i.bak -e "s%#listen_addresses = 'localhost'%listen_addresses = '*'%g" $PREFIX/data/postgresql.conf;
+    echo 'host    all         all         192.168.99.0/24          trust' >> $PREFIX/data/pg_hba.conf;
+    sudo -i -u postgres $PREFIX/bin/pg_ctl start;

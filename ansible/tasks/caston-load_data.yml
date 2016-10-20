@@ -1,0 +1,7 @@
+- name: load caston data.
+  shell: >
+    cd /opt/caston;
+    gunzip _caston.dmp.gz;
+    sudo -i -u postgres createlang plpgsql -d caston -U postgres 1>/dev/null 2>/dev/null;
+    sudo -i -u postgres psql caston caston < /opt/caston/_caston.dmp 1>/dev/null 2>/dev/null;
+    sudo -i -u postgres psql caston caston < /opt/caston/services/db/_func_caston.sql 1>/dev/null 2>/dev/null;

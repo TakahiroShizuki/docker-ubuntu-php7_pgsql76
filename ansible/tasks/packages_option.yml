@@ -1,0 +1,5 @@
+- name: setup
+  shell: >
+    service samba restart;
+    /etc/init.d/apache2 start;
+    sudo -i -u postgres /home/postgres/bin/pg_ctl start

@@ -149,7 +149,7 @@ RUN apt-get clean
 RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update -o Acquire::ForceIPv4=true && apt-get clean
 RUN apt-get install -y php7.0-fpm php7.0-pgsql php7.0 libapache2-mod-php7.0
-
+RUN sed -i.bak -e "s%;date.timezone =%date.timezone = Asia/Tokyo%g" /etc/php/7.0/apache2/php.ini
 
 # fonts
 RUN mkdir -p /usr/share/fonts

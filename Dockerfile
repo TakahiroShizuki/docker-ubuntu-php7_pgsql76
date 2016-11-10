@@ -186,4 +186,4 @@ ADD terminalrc $CLIENT_HOME/.config/xfce4/terminal/
 WORKDIR $CLIENT_HOME
 RUN echo docker run -it --rm -e DISPLAY=\$DISPLAY -v /\$SHELL_PATH:/mnt/docke_dir -v /\$HOME:/home/host_user -p 80:80 -p 5432:5432 local/php7_pgsql96
 
-CMD xfce4-terminal --tab --command "bash -c 'echo \"TODO: dropbox_uploader.sh && cd /opt/src/ && ansible-playbook -v --extra-vars "taskname=copy_ssh" ansible/playbook.yml && ./run_ansible.sh\" && echo \"press any key.\" && read'"
+CMD xfce4-terminal --tab --command "bash -c 'echo $HOST_IP HOST_IP >> /etc/hosts'" --tab --command "bash -c 'echo \"//$HOST_IP/Downloads /mnt/host/Downloads cifs rw,cache=strict,vers=1.0,sec=ntlmssp,username=shizuki,domain=SHIZUKI-MBP-WIN,uid=0,noforceuid,gid=0,noforcegid,addr=$HOST_IP,file_mode=0755,dir_mode=0755,iocharset=utf8,nounix,serverino,mapposix,rsize=61440,wsize=65536,actimeo=1 0 0\" >> /etc/fstab'"

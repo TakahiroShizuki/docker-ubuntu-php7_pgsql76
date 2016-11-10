@@ -151,6 +151,14 @@ RUN apt-get update -o Acquire::ForceIPv4=true && apt-get clean
 RUN apt-get install -y php7.0-fpm php7.0-pgsql php7.0 libapache2-mod-php7.0
 
 
+# fonts
+RUN mkdir -p /usr/share/fonts
+WORKDIR /usr/share/fonts
+RUN wget -t 1 --no-check-certificate https://github.com/mzyy94/RictyDiminished-for-Powerline/archive/3.2.4-powerline-early-2016.zip -O ricty_diminished.zip
+RUN /bin/sh -c 'unzip -jo ricty_diminished.zip'
+RUN fc-cache -rfv
+
+
 # cifs
 RUN mkdir -p /mnt/host/Downloads
 

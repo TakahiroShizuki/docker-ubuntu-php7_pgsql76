@@ -128,6 +128,7 @@ RUN cd /usr/local/share/fonts && \
 
 	
 # Install Apache2
+RUN apt-get update -o Acquire::ForceIPv4=true
 RUN apt-get install -y apache2 apache2-dev
 RUN apt-get clean
 COPY apache2.conf /etc/apache2/

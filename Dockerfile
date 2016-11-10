@@ -144,7 +144,8 @@ RUN apt-get update -o Acquire::ForceIPv4=true && apt-get -y upgrade
 RUN apt-get -y install postgresql-9.6 pgadmin3
 RUN apt-get clean
 
-# copy source PHP7。0
+
+# copy source PHP7.0
 RUN add-apt-repository ppa:ondrej/php
 RUN apt-get update -o Acquire::ForceIPv4=true && apt-get clean
 RUN apt-get install -y php7.0-fpm php7.0-pgsql php7.0 libapache2-mod-php7.0

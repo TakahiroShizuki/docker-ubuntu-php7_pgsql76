@@ -150,11 +150,8 @@ RUN apt-get update -o Acquire::ForceIPv4=true && apt-get clean
 RUN apt-get install -y php7.0-fpm php7.0-pgsql php7.0 libapache2-mod-php7.0
 
 
-# samba
-COPY smb.conf /etc/samba/
-RUN apt-get -y install samba;
-RUN chown www-data:www-data /opt/;
-RUN chmod -R g+s /opt/;
+# cifs
+RUN mkdir -p /mnt/host/Downloads
 
 
 # options

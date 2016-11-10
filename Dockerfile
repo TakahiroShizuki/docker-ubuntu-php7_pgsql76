@@ -111,9 +111,8 @@ RUN dpkg -i diffmerge_4.2.0.697.stable_amd64.deb
 # Set Env
 RUN umask 002
 ENV SHELL /bin/bash
-RUN mkdir $CLIENT_HOME/.ssh
-RUN chmod 600 $CLIENT_HOME/.ssh
 RUN git config --global push.default simple
+
 
 # Set Timezone
 RUN cp /usr/share/zoneinfo/Japan /etc/localtime
@@ -157,6 +156,13 @@ WORKDIR /usr/share/fonts
 RUN wget -t 1 --no-check-certificate https://github.com/mzyy94/RictyDiminished-for-Powerline/archive/3.2.4-powerline-early-2016.zip -O ricty_diminished.zip
 RUN /bin/sh -c 'unzip -jo ricty_diminished.zip'
 RUN fc-cache -rfv
+
+
+# ssh
+WORKDIR /root
+RUN bash -c "mkdir .ssh && chmod 700 .ssh"
+RUN bash -c "cd .ssh/ && touch authorized_keys && chmod 600 authorized_keys"
+RUN bash -c "cd .ssh/ && touch config && chmod 600 config"
 
 
 # cifs
